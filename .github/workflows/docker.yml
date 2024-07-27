@@ -27,7 +27,7 @@ jobs:
 
       - name: Build Micronaut project
         run: |
-          ./mvnw package -Dpackaging=native-image
+          ./mvnw package -Dpackaging=docker-image
           docker images -a
           docker tag app:latest joaocipriano/micronaut-native:latest
         shell: bash
