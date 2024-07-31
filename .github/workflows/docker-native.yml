@@ -1,0 +1,41 @@
+name: Build and Publish Docker Native Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+
+      - name: Build Micronaut project
+        run: |
+          ./mvnw package -Dpackaging=docker-native
+          docker images -a
+          docker tag app:latest joaocipriano/micronaut-native:latest
+        shell: bash
+
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Publish Micronaut Docker image to DockerHub
+        run: |
+          docker push joaocipriano/micronaut-native:latest
+        shell: bash
