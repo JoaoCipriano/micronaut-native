@@ -12,3 +12,17 @@ endpoints:
   prometheus:
     sensitive: false
 
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/attendance
+    username: postgres
+    password: 'admin'
+    db-type: postgres
+    dialect: POSTGRES
+    driver-class-name: org.postgresql.Driver
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update

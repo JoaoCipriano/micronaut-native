@@ -1,4 +1,4 @@
-package com.example;
+package com.pilgrim;
 
 import io.micronaut.runtime.Micronaut;
 
