@@ -14,7 +14,7 @@ endpoints:
 
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/attendance
+    url: jdbc:postgresql://postgres_attendance:5432/attendance
     username: postgres
     password: 'admin'
     db-type: postgres
