@@ -1,20 +1,10 @@
 micronaut:
   application:
     name: app
-  metrics:
-    enabled: true
-    export:
-      prometheus:
-        enabled: true
-        step: PT1M
-        descriptions: true
-endpoints:
-  prometheus:
-    sensitive: false
 
 datasources:
   default:
-    url: jdbc:postgresql://postgres_attendance:5432/attendance
+    url: jdbc:postgresql://127.0.0.1:5432/attendance
     username: postgres
     password: 'admin'
     db-type: postgres
