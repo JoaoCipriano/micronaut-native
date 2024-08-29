@@ -4,7 +4,7 @@ micronaut:
 
 datasources:
   default:
-    url: jdbc:postgresql://172.24.0.2:5432/attendance
+    url: jdbc:postgresql://127.0.0.1:5432/attendance
     username: postgres
     password: 'admin'
     db-type: postgres
@@ -16,3 +16,4 @@ jpa:
       hibernate:
         hbm2ddl:
           auto: update
+    compile-time-hibernate-proxies: true
