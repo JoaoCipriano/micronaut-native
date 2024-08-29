@@ -11,6 +11,8 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import org.hibernate.ObjectNotFoundException;
 
+import java.time.LocalDateTime;
+
 @Controller("/attendances")
 public class AttendanceController {
 
@@ -24,6 +26,7 @@ public class AttendanceController {
     public AttendanceResponse save(@Body AttendanceRequest request) {
         var entity = new AttendanceEntity();
         entity.setName(request.name());
+        entity.setCreatedAt(LocalDateTime.now());
         entity = attendanceRepository.save(entity);
         return new AttendanceResponse(entity.getId(), entity.getName(), entity.getCreatedAt());
     }

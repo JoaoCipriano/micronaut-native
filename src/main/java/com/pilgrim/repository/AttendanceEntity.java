@@ -24,7 +24,7 @@ public class AttendanceEntity {
     private String name;
 
     @Column(name = "created_at", nullable = false)
-    @CreationTimestamp
+//    @CreationTimestamp todo: verify if it works without this annotation
     private LocalDateTime createdAt;
 
     public String getId() {
