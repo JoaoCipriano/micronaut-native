@@ -24,7 +24,7 @@ public class AwsServicesConfig {
     public DynamoDbClient dynamoDbClient(AwsCredentialsProvider awsCredentialsProvider) {
         return DynamoDbClient.builder()
                 .region(region)
-                .endpointOverride(URI.create("http://localstack:4566"))
+                .endpointOverride(URI.create("http://localhost:4566"))
                 .credentialsProvider(awsCredentialsProvider)
                 .build();
     }
