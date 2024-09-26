@@ -1,0 +1,76 @@
+services:
+  micronaut-native:
+    image: joaocipriano/micronaut-native:latest
+    container_name: micronaut-native
+    platform: linux/amd64
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 64M
+        reservations:
+          cpus: '0.25'
+          memory: 64M
+    cpuset: "1"
+    ports:
+      - "8080:8080"
+    networks:
+      - micronaut-network
+    depends_on:
+      - postgres
+
+  micronaut-jvm:
+    image: joaocipriano/micronaut-jvm:latest
+    container_name: micronaut-jvm
+    platform: linux/amd64
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 384M
+        reservations:
+          cpus: '0.50'
+          memory: 384M
+    cpuset: "1"
+    ports:
+      - "8081:8080"
+    networks:
+      - micronaut-network
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.1-alpine3.18
+    container_name: postgres_attendance
+    restart: always
+    environment:
+      - POSTGRES_DB=attendance
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - '5432:5432'
+    networks:
+      - micronaut-network
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    ports:
+      - "4566:4566" # Use port 4566 for both DynamoDB and S3
+    environment:
+      - SERVICES=dynamodb
+      - AWS_ACCESS_KEY_ID=access_key_id
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_SECRET_ACCESS_KEY=secret
+    networks:
+      - micronaut-network
+
+networks:
+  micronaut-network:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
